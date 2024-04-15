@@ -196,7 +196,8 @@ class CustomForm(QMainWindow, Ui_mainWindow):
 
             pdf_data = get_all_invoice_file(self.pdf_dir_path,
                                             FileType.PDF)
-            service_template_df = pd.DataFrame(columns=['资产管理编号', '委托人', '委托单位', '委托单位地址', '委托人电话', '委托单位所属区域', '委托单位行业领域',
+            service_template_df = pd.DataFrame(columns=['资产管理编号', '委托人', '委托单位', '委托单位类型',
+                                                        '委托单位地址', '委托人电话', '委托单位所属区域', '委托单位行业领域',
            '委托单位邮编', '委托单位邮箱', '委托单位传真', '委托单位开户行', '委托单位银行账号', '发票代码', '发票号码',
            '发票金额', '发票日期', '操作人姓名', '服务次数', '完成样品数', '使用机时', '收费（元）', '项目名称（代号）',
            '项目编号', '项目来源', '委托内容及检测要求', '委托人评价', '服务方式', '项目学科领域', '是否签订协议',
@@ -238,6 +239,7 @@ class CustomForm(QMainWindow, Ui_mainWindow):
                     client_unit = custom_info["委托单位"]
                     client_address = custom_info["委托单位地址"]
                     client_phone = custom_info["委托人电话"]
+                    client_company_tye = custom_info["委托单位类型"]
                     if (not pd.isna(list(custom_info.values())[3])) and (not pd.isna(list(custom_info.values())[4])):
                         client_region = "-".join(list(custom_info.values())[3:5])
                     else:
@@ -248,6 +250,7 @@ class CustomForm(QMainWindow, Ui_mainWindow):
                     client_address = ""
                     client_phone = ""
                     client_region = ""
+                    client_company_tye = ""
                 if billing_info is not None:
                     operator_name = billing_info["操作员1姓名"]
                     serving_times = len(df)
@@ -271,6 +274,7 @@ class CustomForm(QMainWindow, Ui_mainWindow):
                     using_hours = -1
 
                 new_data = {"资产管理编号": device_id, "委托人": client_name, "委托单位": client_unit,
+                            '委托单位类型': client_company_tye,
                             "委托单位地址": client_address, "委托人电话": client_phone, "委托单位所属区域": client_region,
                             "发票号码": invoice_id,
                             "发票金额": billing, "发票日期": date, "操作人姓名": operator_name, "服务次数": serving_times,
