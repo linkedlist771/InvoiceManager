@@ -230,7 +230,7 @@ class CustomForm(QMainWindow, Ui_mainWindow):
                 else:
                     pass
                     # service_template_df = pd.concat()
-                date = str(df["凭证日期（开票）"].iloc[-1]).split(" ")[0]
+                date = str(df["开票日期1"].iloc[-1]).split(" ")[0]
                 if billing == -1:
                     continue
                 if custom_info is not None:
@@ -266,7 +266,7 @@ class CustomForm(QMainWindow, Ui_mainWindow):
                     else:
                         price = -1
                     billing_criteria_str = f"{price}元/时"
-                    using_hours = billing / price
+                    using_hours = int(billing // price)
                 else:
                     operator_name = ""
                     serving_times = -1
@@ -278,7 +278,8 @@ class CustomForm(QMainWindow, Ui_mainWindow):
                             "委托单位地址": client_address, "委托人电话": client_phone, "委托单位所属区域": client_region,
                             "发票号码": invoice_id,
                             "发票金额": billing, "发票日期": date, "操作人姓名": operator_name, "服务次数": serving_times,
-                            "收费标准": billing_criteria_str, "使用机时": using_hours,
+                            "收费（元）": billing,
+                            "使用机时": using_hours,
                             "完成样品数": int(serving_times),
                             }
                 service_template_df = pd.concat([service_template_df, pd.DataFrame([new_data])])
